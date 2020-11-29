@@ -1,0 +1,32 @@
+img {
+  width: 50px;
+  height: 50px;
+}
+
+#location {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+#curr-weather {
+  text-transform: capitalize;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+#curr-temp {
+  font-size: 3em;
+}
+
+#feels-temp {
+  font-size: 1.5em;
+}
+
+#high-low-temp {
+  margin-top: 2em;
+}
+
+#wind {
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
