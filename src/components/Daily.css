@@ -1,0 +1,49 @@
+#daily {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  /* flex-flow: row wrap;
+  justify-content: space-between; */
+}
+
+.weather-card {
+  border: 1px solid white;
+  border-radius: 5px;
+  width: 255px;
+  margin: auto;
+  margin-bottom: 1.5em;
+  /* display: inline-block; */
+  flex: 1;
+  /* background: rgb(255, 211, 211);
+  background: linear-gradient(270deg, rgba(255, 211, 211, 1) 0%, rgba(222, 227, 255, 1) 100%); */
+  /* background: rgb(83, 0, 0);
+  background: linear-gradient(270deg, rgba(83, 0, 0, 1) 0%, rgba(0, 12, 78, 1) 100%);
+  background: rgb(255, 161, 161);
+  background: radial-gradient(circle, rgba(255, 161, 161, 1) 0%, rgba(131, 150, 255, 1) 100%); */
+}
+
+.title {
+  /* border-bottom: 1px solid black; */
+  font-size: 1.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  margin-bottom: 1.5em;
+}
+
+.low {
+  color: #2980b9;
+}
+
+.high {
+  color: #e74c3c;
+}
+
+@media (max-width: 480px) {
+  #daily {
+    display: block;
+  }
+}

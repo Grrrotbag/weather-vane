@@ -13,59 +13,38 @@ class App extends React.Component {
     this.state = {
       currentUnits: "metric",
       selectedUnits: "metric",
-      currentCity: "Hertford, uk",
-      // country: "uk",
-      searchString: "Hertford, uk",
-      lat: 53.4794892,
-      lon: -2.2451148,
+      currentCity: "Current Location",
+      searchString: "Current Location",
+      lat: null,
+      lon: null,
       data: null,
     };
   }
+
   componentDidMount() {
-    // const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${this.state.lat}&lon=${this.state.lon}&exclude=${this.state.excl}&appid=${apiKey}`;
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${this.state.city},${this.state.country}&units=${this.state.currentUnits}&appid=${weatherApiKey}`;
-    // fetch(url)
-    //   .then((response) => response.json())
-    //   .then((json) => {
-    //     this.setState({
-    //       data: json,
-    //     });
-    //     console.log(json, this.state.data);
-    //   });
-    // this.callApi();const { selectedUnits, searchString, lat, lon } = this.state;
-    const { currentUnits, selectedUnits, searchString, lat, lon } = this.state;
-    const geocode = `https://eu1.locationiq.com/v1/search.php?key=${geocodeApiKey}&q=${searchString}&format=json`;
+    let latitude, longitude;
 
-    fetch(geocode)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        this.setState({
-          lat: json[0].lat,
-          lon: json[0].lon,
-        });
-        console.log(this.state.lat, this.state.lon);
-      });
+    let success = (position) => {
+      latitude = position.coords.latitude;
+      longitude = position.coords.longitude;
+      console.log(latitude, longitude);
+      this.setState(
+        {
+          lat: latitude,
+          lon: longitude,
+        },
+        () => {
+          this.getWeatherData();
+        }
+      );
+      console.log(this.state);
+    };
 
-    console.log(this.state.lat, this.state.lon);
+    function error() {
+      console.log("unable to retrieve location");
+    }
 
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${
-      selectedUnits ? selectedUnits : currentUnits
-    }&appid=${weatherApiKey}`;
-    console.log(url);
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=${
-    //   selectedUnits ? selectedUnits : currentUnits
-    // }&appid=${weatherApiKey}`;
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        this.setState({
-          data: json,
-          currentUnits: selectedUnits,
-        });
-      });
+    navigator.geolocation.getCurrentPosition(success, error);
   }
 
   setUnits(event) {
@@ -80,8 +59,7 @@ class App extends React.Component {
     });
   }
 
-  callApi(event) {
-    const { currentUnits, selectedUnits, searchString, lat, lon } = this.state;
+  getCity(searchString) {
     const geocode = `https://eu1.locationiq.com/v1/search.php?key=${geocodeApiKey}&q=${searchString}&format=json`;
 
     fetch(geocode)
@@ -96,14 +74,14 @@ class App extends React.Component {
       });
 
     console.log(this.state.lat, this.state.lon);
+  }
 
+  getWeatherData() {
+    const { currentUnits, selectedUnits, searchString, lat, lon } = this.state;
     const url = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=${
       selectedUnits ? selectedUnits : currentUnits
     }&appid=${weatherApiKey}`;
     console.log(url);
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=${
-    //   selectedUnits ? selectedUnits : currentUnits
-    // }&appid=${weatherApiKey}`;
 
     fetch(url)
       .then((response) => response.json())
@@ -115,11 +93,19 @@ class App extends React.Component {
           currentCity: searchString,
         });
       });
+  }
+
+  clickSearch(event) {
+    const { searchString } = this.state;
+    this.getCity(searchString);
+
+    this.getWeatherData(event);
+
     event.preventDefault();
   }
 
   render() {
-    let { city, currentCity, data, currentUnits, searchString } = this.state;
+    let { currentLocation, currentCity, data, currentUnits, searchString } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -127,13 +113,13 @@ class App extends React.Component {
           <p>Weather Vane</p>
         </header>
         <main id="body-container">
-          <Display data={data} units={currentUnits} location={searchString} currentLocation={currentCity} />
           <Form
-            city={city}
+            currentLocation={currentLocation}
             setUnits={this.setUnits.bind(this)}
             handleSearch={this.handleSearch.bind(this)}
-            callApi={this.callApi.bind(this)}
+            clickSearch={this.clickSearch.bind(this)}
           />
+          <Display data={data} units={currentUnits} location={searchString} currentLocation={currentCity} />
         </main>
       </div>
     );

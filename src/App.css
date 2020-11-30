@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-color: whitesmoke;
+  background-color: #282c34;
+  color: white;
+  height: 100vh;
 }
 
 .App-logo {
@@ -32,7 +36,9 @@
 }
 
 #body-container {
+  margin: auto;
   margin-top: 2em;
+  width: 75vw;
 }
 
 @keyframes App-logo-spin {
