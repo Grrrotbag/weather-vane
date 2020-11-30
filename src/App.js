@@ -105,7 +105,7 @@ class App extends React.Component {
   }
 
   render() {
-    let { currentLocation, currentCity, data, currentUnits, searchString } = this.state;
+    let { currentCity, data, currentUnits, searchString } = this.state;
     return (
       <div className="App">
         <header className="App-header">
@@ -114,7 +114,7 @@ class App extends React.Component {
         </header>
         <main id="body-container">
           <Form
-            currentLocation={currentLocation}
+            currentLocation={currentCity}
             setUnits={this.setUnits.bind(this)}
             handleSearch={this.handleSearch.bind(this)}
             clickSearch={this.clickSearch.bind(this)}
