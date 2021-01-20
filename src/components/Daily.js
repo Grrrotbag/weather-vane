@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThermometerFull,
   faThermometerEmpty,
-  faThermometerHalf,
-  faWind,
-  faCompass,
+  // faThermometerHalf,
+  // faWind,
+  // faCompass,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Daily = (props) => {
